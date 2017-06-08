@@ -2,7 +2,7 @@ package com.schedule.demo.vo;
 
 public class ScheduleJob {
 
-	private String jobId;
+	private Long jobId;
 	private String jobName;
 	private String cornExpr;
 	private String jobGroupName;
@@ -20,7 +20,7 @@ public class ScheduleJob {
 		
 	}
 	
-	public ScheduleJob(String jobId, String cornExpr, String jobGroupName, Class jobClass,
+	public ScheduleJob(Long jobId, String cornExpr, String jobGroupName, Class jobClass,
 			String triggerName, String triggerGroupName) {
 		super();
 		this.jobId = jobId;
@@ -31,11 +31,11 @@ public class ScheduleJob {
 		this.triggerGroupName = triggerGroupName;
 	}
 	
-	public String getJobId() {
+	public Long getJobId() {
 		return jobId;
 	}
 
-	public void setJobId(String jobId) {
+	public void setJobId(Long jobId) {
 		this.jobId = jobId;
 	}
 
