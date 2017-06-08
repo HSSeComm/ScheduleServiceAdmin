@@ -56,11 +56,11 @@
 			<version>2.2.1</version>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!--     		<groupId>org.apache.commons</groupId> -->
-<!--     		<artifactId>commons-compress</artifactId> -->
-<!--     		<version>1.14</version>  -->
-<!-- 		</dependency> -->
+		<dependency>
+    		<groupId>mysql</groupId>
+    		<artifactId>mysql-connector-java</artifactId>
+    		<version>5.1.42</version>
+		</dependency>
 		
 		<!-- swagger for api document -->
 		<dependency>
