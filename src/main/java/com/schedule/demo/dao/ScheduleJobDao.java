@@ -7,9 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.schedule.demo.vo.ScheduleJob;
 
+@Repository
 public class ScheduleJobDao {
 
 	@Autowired
@@ -37,7 +39,7 @@ public class ScheduleJobDao {
 				scheduleJob.getTriggerGroupName(), scheduleJob.getStatus(), scheduleJob.getAppUrl(),
 				scheduleJob.getHttpMehtod(), scheduleJob.getSuccessfulCode());
 		if (flag > 0) {
-			long id= this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
+			long id = this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
 			scheduleJob.setJobId(id);
 			return id;
 		}
@@ -46,12 +48,13 @@ public class ScheduleJobDao {
 	}
 
 	public int update(ScheduleJob scheduleJob) {
-		int isHas = this.getJdbcTemplate().queryForObject("select count(job_id) from schedule_job where job_name=? and job_id<>?",
-				new Object[] { scheduleJob.getJobName(),scheduleJob.getJobId() }, Integer.class);
+		int isHas = this.getJdbcTemplate().queryForObject(
+				"select count(job_id) from schedule_job where job_name=? and job_id<>?",
+				new Object[] { scheduleJob.getJobName(), scheduleJob.getJobId() }, Integer.class);
 		if (isHas > 0) {
 			return -1;
 		}
-		
+
 		return getJdbcTemplate().update(
 				"update schedule_job set job_name=?,corn_expr=?,job_group_name=?,job_class=?,trigger_name=?,trigger_group_name=?,app_url=?,http_mehtod=?,successful_code=? where job_id=?",
 				scheduleJob.getJobName(), scheduleJob.getCornExpr(), scheduleJob.getJobGroupName(),
@@ -77,6 +80,7 @@ public class ScheduleJobDao {
 	public List<ScheduleJob> queryScheduleJobs() {
 		return getJdbcTemplate().query("select * from schedule_job", new RowMapper<ScheduleJob>() {
 
+			@Override
 			public ScheduleJob mapRow(ResultSet rs, int arg1) throws SQLException {
 				ScheduleJob scheduleJob = new ScheduleJob();
 				scheduleJob.setJobId(rs.getLong("job_id"));
@@ -104,35 +108,37 @@ public class ScheduleJobDao {
 
 		});
 	}
-	
+
 	public ScheduleJob getScheduleJobById(Long jobId) {
-		return getJdbcTemplate().queryForObject("select * from schedule_job where job_id=?", new Object[] { jobId},new RowMapper<ScheduleJob>() {
+		return getJdbcTemplate().queryForObject("select * from schedule_job where job_id=?", new Object[] { jobId },
+				new RowMapper<ScheduleJob>() {
 
-			public ScheduleJob mapRow(ResultSet rs, int arg1) throws SQLException {
-				ScheduleJob scheduleJob = new ScheduleJob();
-				scheduleJob.setJobId(rs.getLong("job_id"));
-				scheduleJob.setJobName(rs.getString("job_name"));
-				scheduleJob.setCornExpr(rs.getString("corn_expr"));
-				scheduleJob.setJobGroupName(rs.getString("job_group_name"));
-				scheduleJob.setTriggerName(rs.getString("trigger_name"));
-				scheduleJob.setTriggerGroupName(rs.getString("trigger_group_name"));
-				scheduleJob.setStatus(rs.getString("status"));
-				scheduleJob.setAppUrl(rs.getString("app_url"));
-				scheduleJob.setHttpMehtod(rs.getString("http_mehtod"));
-				scheduleJob.setSuccessfulCode(rs.getString("successful_code"));
-				scheduleJob.setJobName(rs.getString("job_name"));
-				scheduleJob.setJobName(rs.getString("job_name"));
-				scheduleJob.setJobName(rs.getString("job_name"));
-				try {
-					Class jobClass = Class.forName(rs.getString("job_class"));
-					scheduleJob.setJobClass(jobClass);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
+					@Override
+					public ScheduleJob mapRow(ResultSet rs, int arg1) throws SQLException {
+						ScheduleJob scheduleJob = new ScheduleJob();
+						scheduleJob.setJobId(rs.getLong("job_id"));
+						scheduleJob.setJobName(rs.getString("job_name"));
+						scheduleJob.setCornExpr(rs.getString("corn_expr"));
+						scheduleJob.setJobGroupName(rs.getString("job_group_name"));
+						scheduleJob.setTriggerName(rs.getString("trigger_name"));
+						scheduleJob.setTriggerGroupName(rs.getString("trigger_group_name"));
+						scheduleJob.setStatus(rs.getString("status"));
+						scheduleJob.setAppUrl(rs.getString("app_url"));
+						scheduleJob.setHttpMehtod(rs.getString("http_mehtod"));
+						scheduleJob.setSuccessfulCode(rs.getString("successful_code"));
+						scheduleJob.setJobName(rs.getString("job_name"));
+						scheduleJob.setJobName(rs.getString("job_name"));
+						scheduleJob.setJobName(rs.getString("job_name"));
+						try {
+							Class jobClass = Class.forName(rs.getString("job_class"));
+							scheduleJob.setJobClass(jobClass);
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						}
 
-				return scheduleJob;
-			}
+						return scheduleJob;
+					}
 
-		});
+				});
 	}
 }

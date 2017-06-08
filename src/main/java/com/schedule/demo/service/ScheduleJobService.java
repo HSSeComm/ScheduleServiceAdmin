@@ -58,7 +58,7 @@ public class ScheduleJobService {
 		}
 		boolean successful = false;
 		// get job details by id
-
+		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(job.getJobId());
 		// populate job updated details
 
 		// update latest in db
