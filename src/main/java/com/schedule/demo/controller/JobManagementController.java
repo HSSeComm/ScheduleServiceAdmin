@@ -27,7 +27,7 @@ public class JobManagementController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<ScheduleJob> getJobs() {
 
-		return null;
+		return scheduleJobService.getJobs();
 	}
 
 	/**
