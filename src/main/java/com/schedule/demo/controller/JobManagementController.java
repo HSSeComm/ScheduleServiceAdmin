@@ -2,12 +2,14 @@ package com.schedule.demo.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.schedule.demo.service.ScheduleJobService;
 import com.schedule.demo.vo.ScheduleJob;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,6 +19,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/ScheduleJobs")
 public class JobManagementController {
+
+	@Autowired
+	private ScheduleJobService scheduleJobService;
 
 	@ApiOperation(value = "Get All Jobs list", notes = "")
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -37,9 +42,9 @@ public class JobManagementController {
 	@ApiOperation(value = "Create ScheduleJobs", notes = "Create ScheduleJobs by ScheduleJobs object")
 	@ApiImplicitParam(name = "ScheduleJobs", value = "ScheduleJobs entity", required = true, dataType = "ScheduleJobs")
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String postScheduleJobs(@RequestBody ScheduleJob ScheduleJobs) {
-
-		return "success";
+	public String postScheduleJobs(@RequestBody ScheduleJob scheduleJobs) {
+		boolean saveStatus = scheduleJobService.addScheduleJob(scheduleJobs);
+		return saveStatus ? "success" : "failed";
 	}
 
 	@ApiOperation(value = "Update ScheduleJobs", notes = "Update ScheduleJobs by id")
