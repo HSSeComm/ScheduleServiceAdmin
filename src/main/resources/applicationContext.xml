@@ -25,8 +25,12 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="scheduleJobDao" class="com.schedule.demo.dao.ScheduleJobDao">
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="scheduleJobDao" class="com.schedule.demo.dao.ScheduleJobDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 
 </beans>
