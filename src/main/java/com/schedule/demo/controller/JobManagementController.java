@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.schedule.demo.service.ScheduleJobService;
@@ -25,7 +26,7 @@ public class JobManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<ScheduleJob> getJobs() {
+	public @ResponseBody List<ScheduleJob> getJobs() {
 
 		return scheduleJobService.getJobs();
 	}
@@ -37,7 +38,7 @@ public class JobManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ScheduleJob getScheduleJob(@PathVariable Long id) {
+	public @ResponseBody ScheduleJob getScheduleJob(@PathVariable Long id) {
 		ScheduleJob ScheduleJobs = null;
 
 		return ScheduleJobs;

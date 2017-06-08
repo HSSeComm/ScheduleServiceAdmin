@@ -60,12 +60,15 @@ public class ScheduleJobService {
 		// get job details by id
 		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(job.getJobId());
 		// populate job updated details
-
+		scheduleJob.setAppUrl(job.getAppUrl());
+		scheduleJob.setSuccessfulCode(job.getSuccessfulCode());
+		scheduleJob.setJobName(job.getJobName());
+		scheduleJob.setHttpMehtod(job.getHttpMehtod());
 		// update latest in db
-
+		scheduleJobDao.update(scheduleJob);
 		// update to ScheduleService
 		try {
-			quartzManager.updateJobCron(job);
+			quartzManager.updateJobCron(scheduleJob);
 			successful = true;
 		} catch (SchedulerException e) {
 			successful = false;
@@ -76,18 +79,16 @@ public class ScheduleJobService {
 	public boolean changeStatus(Long id, String status) {
 		boolean successful = false;
 		// get job details by id
-
-		// populate job updated details
-
+		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);
 		// update latest in db
-
+		scheduleJob.setStatus(status);
+		scheduleJobDao.update(scheduleJob);
 		// update to ScheduleService
 		try {
-			ScheduleJob job = new ScheduleJob();
 			if ("NORMAL".equals(status)) {
-				quartzManager.resumeJob(job);
+				quartzManager.resumeJob(scheduleJob);
 			} else if ("PAUSE".equals(status)) {
-				quartzManager.pauseJob(job);
+				quartzManager.pauseJob(scheduleJob);
 			}
 			successful = true;
 		} catch (SchedulerException e) {
@@ -99,13 +100,12 @@ public class ScheduleJobService {
 	public boolean deleteStatus(Long id) {
 		boolean successful = false;
 		// get job details by id
-
+		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);
 		// delete job in db
-
+		scheduleJobDao.delete(id);
 		// update to ScheduleService
 		try {
-			ScheduleJob job = new ScheduleJob();
-			quartzManager.deleteJob(job);
+			quartzManager.deleteJob(scheduleJob);
 			successful = true;
 		} catch (SchedulerException e) {
 			successful = false;
