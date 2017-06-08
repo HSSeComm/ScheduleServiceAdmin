@@ -56,6 +56,24 @@ public class ScheduleLogDao {
 		});
 	}
 
+	public List<ScheduleLog> queryScheduleLogsByJobId(Long jogId) {
+		return getJdbcTemplate().query("select * from schedule_log where job_id=?", new Object[] { jogId }, new RowMapper<ScheduleLog>() {
+
+			@Override
+			public ScheduleLog mapRow(ResultSet rs, int arg1) throws SQLException {
+				ScheduleLog scheduleLog = new ScheduleLog();
+				scheduleLog.setLogId(rs.getLong("log_id"));
+				scheduleLog.setJobId(rs.getLong("job_id"));
+				scheduleLog.setJobName(rs.getString("job_name"));
+				scheduleLog.setReason(rs.getString("reason"));
+				scheduleLog.setInsertDate(rs.getDate("insert_date"));
+
+				return scheduleLog;
+			}
+
+		});
+	}
+	
 	public ScheduleLog getScheduleLogById(Long logId) {
 		return getJdbcTemplate().queryForObject("select * from schedule_log where log_id=?", new Object[] { logId },
 				new RowMapper<ScheduleLog>() {
