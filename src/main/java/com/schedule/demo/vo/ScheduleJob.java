@@ -6,7 +6,7 @@ public class ScheduleJob {
 	private String jobName;
 	private String cornExpr;
 	private String jobGroupName;
-	private String jobClass;
+	private Class jobClass;
 	private String triggerName;
 	private String triggerGroupName;
 	private String status;
@@ -16,6 +16,21 @@ public class ScheduleJob {
 	private String httpMehtod;
 	private String successfulCode;
 
+	public ScheduleJob(){
+		
+	}
+	
+	public ScheduleJob(String jobName, String cornExpr, String jobGroupName, Class jobClass,
+			String triggerName, String triggerGroupName) {
+		super();
+		this.jobName = jobName;
+		this.cornExpr = cornExpr;
+		this.jobGroupName = jobGroupName;
+		this.jobClass = jobClass;
+		this.triggerName = triggerName;
+		this.triggerGroupName = triggerGroupName;
+	}
+	
 	public long getJobId() {
 		return jobId;
 	}
@@ -48,11 +63,11 @@ public class ScheduleJob {
 		this.jobGroupName = jobGroupName;
 	}
 
-	public String getJobClass() {
+	public Class getJobClass() {
 		return jobClass;
 	}
 
-	public void setJobClass(String jobClass) {
+	public void setJobClass(Class jobClass) {
 		this.jobClass = jobClass;
 	}
 
