@@ -68,10 +68,10 @@
 						<!-- Messages: style can be found in dropdown.less-->
 						<li class="dropdown messages-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-envelope-o"></i> <span class="label label-success">4</span>
+								class="fa fa-envelope-o"></i> <span class="label label-success">5</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 4 messages</li>
+								<li class="header">You have 5 messages</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -85,7 +85,7 @@
 													Support Team <small><i class="fa fa-clock-o"></i> 5
 														mins</small>
 												</h4>
-												<p>Why not buy a new awesome theme?</p>
+												<p>Welcome!!</p>
 										</a>
 										</li>
 										<!-- end message -->
@@ -95,10 +95,10 @@
 														alt="User Image">
 												</div>
 												<h4>
-													AdminLTE Design Team <small><i
-														class="fa fa-clock-o"></i> 2 hours</small>
+													Design Team <small><i class="fa fa-clock-o"></i> 2
+														hours</small>
 												</h4>
-												<p>Why not buy a new awesome theme?</p>
+												<p>Welcome!!</p>
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
@@ -109,7 +109,7 @@
 													Developers <small><i class="fa fa-clock-o"></i>
 														Today</small>
 												</h4>
-												<p>Why not buy a new awesome theme?</p>
+												<p>Welcome!!</p>
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
@@ -120,7 +120,7 @@
 													Sales Department <small><i class="fa fa-clock-o"></i>
 														Yesterday</small>
 												</h4>
-												<p>Why not buy a new awesome theme?</p>
+												<p>Welcome!!</p>
 										</a></li>
 										<li><a href="#">
 												<div class="pull-left">
@@ -131,7 +131,7 @@
 													Reviewers <small><i class="fa fa-clock-o"></i> 2
 														days</small>
 												</h4>
-												<p>Why not buy a new awesome theme?</p>
+												<p>Welcome!!</p>
 										</a></li>
 									</ul>
 								</li>
@@ -140,10 +140,10 @@
 						<!-- Notifications: style can be found in dropdown.less -->
 						<li class="dropdown notifications-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-bell-o"></i> <span class="label label-warning">10</span>
+								class="fa fa-bell-o"></i> <span class="label label-warning">4</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 10 notifications</li>
+								<li class="header">You have 4 notifications</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -156,9 +156,6 @@
 										</a></li>
 										<li><a href="#"> <i class="fa fa-users text-red"></i>
 												5 new members joined
-										</a></li>
-										<li><a href="#"> <i
-												class="fa fa-shopping-cart text-green"></i> 25 sales made
 										</a></li>
 										<li><a href="#"> <i class="fa fa-user text-red"></i>
 												You changed your username
@@ -180,7 +177,7 @@
 									src="dist/img/user2-160x160.jpg" class="img-circle"
 									alt="User Image">
 
-									<p>Admin - Web Developer</p></li>
+									<p>Admin</p></li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
@@ -241,17 +238,11 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="pages/charts/chartjs.html"><i
-									class="fa fa-circle-o"></i> ChartJS</a></li>
-							<li><a href="pages/charts/morris.html"><i
-									class="fa fa-circle-o"></i> Morris</a></li>
-							<li><a href="pages/charts/flot.html"><i
-									class="fa fa-circle-o"></i> Flot</a></li>
-							<li><a href="pages/charts/inline.html"><i
-									class="fa fa-circle-o"></i> Inline charts</a></li>
+							<li><a href="#"><i class="fa fa-circle-o"></i> Line
+									Chart</a></li>
+							<li><a href="#"><i class="fa fa-circle-o"></i> Pie Chart</a></li>
 						</ul></li>
-					<li><a href="documentation/index.html"><i
-							class="fa fa-book"></i> <span>Documentation</span></a></li>
+					<li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -273,11 +264,11 @@
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
-				<div class="row" style="cursor: pointer;" data-toggle="modal"
-					data-target="#schedulerJobModal">
+				<div class="row">
 					<div class="col-lg-3 col-xs-6">
 						<!-- small box -->
-						<div class="small-box bg-aqua">
+						<div class="small-box bg-aqua" style="cursor: pointer;"
+							onclick="createNewJobPage()">
 							<div class="inner">
 								<h3>Create</h3>
 
@@ -357,8 +348,10 @@
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
-									<input type="text" class="form-control" id="jobName"
-										placeholder="Job Name:">
+									<input type="text" style="display: none" id="submitType"
+										value="" /> <input type="text" style="display: none"
+										id="jobId" value="" /><input type="text" class="form-control"
+										id="jobName" placeholder="Job Name:">
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" id="cronExpr"
@@ -402,7 +395,7 @@
 					<div class="col-md-12">
 						<div class="box">
 							<div class="box-header with-border">
-								<h3 class="box-title">Schedule Jobs</h3>
+								<h3 class="box-title">Scheduler Jobs</h3>
 
 								<div class="box-tools pull-right">
 									<button type="button" class="btn btn-box-tool"

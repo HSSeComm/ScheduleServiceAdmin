@@ -93,6 +93,8 @@ public class ScheduleJobService {
 			successful = true;
 		} catch (SchedulerException e) {
 			successful = false;
+		} catch (Exception e){
+			successful = false;
 		}
 		return successful;
 	}
