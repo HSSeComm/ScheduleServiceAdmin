@@ -13,7 +13,6 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.stereotype.Component;
 
-import com.schedule.demo.jobs.SimpleJob;
 import com.schedule.demo.vo.ScheduleJob;
 
 @Component
@@ -26,15 +25,13 @@ public class QuartzManager {
 	public void addJob(ScheduleJob job) throws SchedulerException {
 		Scheduler sched = gSchedulerFactory.getScheduler();
 		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("callbackUrl", "http://localhost:8080/abc");
-		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass())
-				.withIdentity(job.getJobName(), job.getJobGroupName())
-				.usingJobData(jobDataMap)
-				.build();
+		jobDataMap.put("appUrl", job.getAppUrl());
+		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass()).withIdentity(job.getJobName(), job.getJobGroupName())
+				.usingJobData(jobDataMap).build();
 		CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getTriggerName(), job.getTriggerGroupName())
 				.withSchedule(cronSchedule(job.getCornExpr())).forJob(job.getJobName(), job.getJobGroupName()).build();
-		sched.scheduleJob(jobDetail,trigger);
+		sched.scheduleJob(jobDetail, trigger);
 		sched.start();
 	}
-	
+
 }

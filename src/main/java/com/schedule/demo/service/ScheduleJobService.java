@@ -18,9 +18,10 @@ public class ScheduleJobService {
 			return false;
 		}
 		job.setJobClass(SimpleJob.class);
-		job.setTriggerName("testTriggerName");
+		long current = System.currentTimeMillis();
+		job.setTriggerName("testTriggerName-" + current);
 		job.setTriggerGroupName("testTriggerGroupName");
-		job.setJobGroupName("testJobGroupName");
+		job.setJobGroupName("testJobGroupName-" + current);
 		boolean successful = false;
 		// save job information to db
 
