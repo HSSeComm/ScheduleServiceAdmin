@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -56,7 +57,7 @@ public class SimpleJob implements org.quartz.Job {
 		HttpGet httpGet = new HttpGet(appUrl);
 		CloseableHttpResponse response1 = httpclient.execute(httpGet);
 		try {
-			System.out.println("Calling:" + appUrl + "," + response1.getStatusLine());
+			System.out.println(new Date() + ":Calling:" + appUrl + "," + response1.getStatusLine());
 			resBody = getResponseBodyAsString(response1);
 		} catch (IOException e) {
 

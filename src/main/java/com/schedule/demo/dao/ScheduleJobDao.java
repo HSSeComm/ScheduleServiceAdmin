@@ -35,7 +35,7 @@ public class ScheduleJobDao {
 		int flag = getJdbcTemplate().update(
 				"INSERT INTO schedule_job(job_name,corn_expr,job_group_name,job_class,trigger_name,trigger_group_name,status,app_url,http_mehtod,successful_code) VALUES (?,?,?,?,?,?,?,?,?,?)",
 				scheduleJob.getJobName(), scheduleJob.getCornExpr(), scheduleJob.getJobGroupName(),
-				scheduleJob.getClass() == null ? null : scheduleJob.getJobClass().getClass().getName(), scheduleJob.getTriggerName(),
+				scheduleJob.getClass() == null ? null : scheduleJob.getJobClass().getName(), scheduleJob.getTriggerName(),
 				scheduleJob.getTriggerGroupName(), scheduleJob.getStatus(), scheduleJob.getAppUrl(),
 				scheduleJob.getHttpMehtod(), scheduleJob.getSuccessfulCode());
 		if (flag > 0) {
@@ -58,7 +58,7 @@ public class ScheduleJobDao {
 		return getJdbcTemplate().update(
 				"update schedule_job set job_name=?,corn_expr=?,job_group_name=?,job_class=?,trigger_name=?,trigger_group_name=?,app_url=?,http_mehtod=?,successful_code=? where job_id=?",
 				scheduleJob.getJobName(), scheduleJob.getCornExpr(), scheduleJob.getJobGroupName(),
-				scheduleJob.getClass() == null ? null : scheduleJob.getJobClass().getClass().getName(), scheduleJob.getTriggerName(),
+				scheduleJob.getClass() == null ? null : scheduleJob.getJobClass().getName(), scheduleJob.getTriggerName(),
 				scheduleJob.getTriggerGroupName(), scheduleJob.getAppUrl(), scheduleJob.getHttpMehtod(),
 				scheduleJob.getSuccessfulCode(), scheduleJob.getJobId());
 
