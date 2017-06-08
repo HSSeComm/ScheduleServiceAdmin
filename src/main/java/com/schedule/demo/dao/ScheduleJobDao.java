@@ -20,7 +20,7 @@ public class ScheduleJobDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public int insert(ScheduleJob scheduleJob) {
+	public long insert(ScheduleJob scheduleJob) {
 		int isHas = this.getJdbcTemplate().queryForObject("select count(job_id) from schedule_job where job_name=?",
 				new Object[] { scheduleJob.getJobName() }, Integer.class);
 		if (isHas > 0) {
@@ -36,6 +36,7 @@ public class ScheduleJobDao {
 		if (flag > 0) {
 			long id= this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
 			scheduleJob.setJobId(id);
+			return id;
 		}
 		return flag;
 
