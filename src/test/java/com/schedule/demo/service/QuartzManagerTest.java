@@ -11,12 +11,13 @@ public class QuartzManagerTest {
 	@Test
 	public void testAddJob() throws SchedulerException, InterruptedException{
 		ScheduleJob job = new ScheduleJob();
-		job.setJobId("123456");
+		job.setJobName("123456");
 		job.setJobClass(SimpleJob.class);
 		job.setCornExpr("*/5 * * * * ?");
 		job.setJobGroupName("test");
 		job.setTriggerGroupName("test123");
-		job.setTriggerName("456");
+		job.setTriggerName("123456");
+		job.setAppUrl("http://localhost:8080");
 		
 		QuartzManager quartzManager = new QuartzManager();
 		quartzManager.addJob(job);
