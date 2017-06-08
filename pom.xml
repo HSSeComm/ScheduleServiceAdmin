@@ -56,10 +56,22 @@
 			<version>2.2.1</version>
 		</dependency>
 
+<!-- 		<dependency> -->
+<!--     		<groupId>org.apache.commons</groupId> -->
+<!--     		<artifactId>commons-compress</artifactId> -->
+<!--     		<version>1.14</version>  -->
+<!-- 		</dependency> -->
+		
+		<!-- swagger for api document -->
 		<dependency>
-    		<groupId>org.apache.commons</groupId>
-    		<artifactId>commons-compress</artifactId>
-    		<version>1.14</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
 
