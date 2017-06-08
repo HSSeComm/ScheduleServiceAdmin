@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.schedule.demo.vo.ScheduleJobs;
+import com.schedule.demo.vo.ScheduleJob;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,7 +20,7 @@ public class JobManagementController {
 
 	@ApiOperation(value = "Get All Jobs list", notes = "")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<ScheduleJobs> getJobs() {
+	public List<ScheduleJob> getJobs() {
 
 		return null;
 	}
@@ -28,8 +28,8 @@ public class JobManagementController {
 	@ApiOperation(value = "Get job detail information", notes = "Get ScheduleJobs detail information by ScheduleJobs id")
 	@ApiImplicitParam(name = "id", value = "ScheduleJobs id", required = true, dataType = "Long")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ScheduleJobs getScheduleJobs(@PathVariable Long id) {
-		ScheduleJobs ScheduleJobs = null;
+	public ScheduleJob getScheduleJobs(@PathVariable Long id) {
+		ScheduleJob ScheduleJobs = null;
 
 		return ScheduleJobs;
 	}
@@ -37,7 +37,7 @@ public class JobManagementController {
 	@ApiOperation(value = "Create ScheduleJobs", notes = "Create ScheduleJobs by ScheduleJobs object")
 	@ApiImplicitParam(name = "ScheduleJobs", value = "ScheduleJobs entity", required = true, dataType = "ScheduleJobs")
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String postScheduleJobs(@RequestBody ScheduleJobs ScheduleJobs) {
+	public String postScheduleJobs(@RequestBody ScheduleJob ScheduleJobs) {
 
 		return "success";
 	}
@@ -48,7 +48,7 @@ public class JobManagementController {
 
 	})
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public String updateScheduleJobs(@PathVariable long id, @RequestBody ScheduleJobs ScheduleJobs) {
+	public String updateScheduleJobs(@PathVariable long id, @RequestBody ScheduleJob ScheduleJobs) {
 
 		return "success";
 	}

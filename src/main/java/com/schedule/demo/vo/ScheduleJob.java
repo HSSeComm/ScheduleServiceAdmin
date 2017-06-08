@@ -1,6 +1,6 @@
 package com.schedule.demo.vo;
 
-public class ScheduleJobs {
+public class ScheduleJob {
 
 	private long jobId;
 	private String jobName;
@@ -10,6 +10,11 @@ public class ScheduleJobs {
 	private String triggerName;
 	private String triggerGroupName;
 	private String status;
+
+	// client information:
+	private String appUrl;
+	private String httpMehtod;
+	private String successfulCode;
 
 	public long getJobId() {
 		return jobId;
@@ -73,6 +78,30 @@ public class ScheduleJobs {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getAppUrl() {
+		return appUrl;
+	}
+
+	public void setAppUrl(String appUrl) {
+		this.appUrl = appUrl;
+	}
+
+	public String getHttpMehtod() {
+		return httpMehtod;
+	}
+
+	public void setHttpMehtod(String httpMehtod) {
+		this.httpMehtod = httpMehtod;
+	}
+
+	public String getSuccessfulCode() {
+		return successfulCode;
+	}
+
+	public void setSuccessfulCode(String successfulCode) {
+		this.successfulCode = successfulCode;
 	}
 
 }
