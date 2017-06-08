@@ -23,11 +23,33 @@ public class ScheduleJobDaoTest extends BaseJunit4Test {
 	}
 
 	@Test
+	public void update() {
+		ScheduleJob scheduleJob = new ScheduleJob();
+		scheduleJob.setJobId(1L);
+		scheduleJob.setJobName("test");
+		scheduleJob.setCornExpr("test3");
+		long id = scheduleJobDao.update(scheduleJob);
+		System.out.println(id);
+	}
+
+	@Test
 	public void list() {
 		ScheduleJob scheduleJob = new ScheduleJob();
 		scheduleJob.setJobName("test1");
 		scheduleJob.setCornExpr("test2");
 		List<ScheduleJob> list = scheduleJobDao.queryScheduleJobs();
 		System.out.println(list.size());
+	}
+
+	@Test
+	public void getById() {
+		ScheduleJob job = scheduleJobDao.getScheduleJobById(1L);
+
+	}
+
+	@Test
+	public void delete() {
+		int flag = scheduleJobDao.delete(2L);
+		System.out.println(flag);
 	}
 }
