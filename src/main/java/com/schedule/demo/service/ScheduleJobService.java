@@ -23,9 +23,7 @@ public class ScheduleJobService {
 	}
 
 	public ScheduleJob getScheduleJob(Long id) {
-		ScheduleJob ScheduleJobs = null;
-
-		return ScheduleJobs;
+		return scheduleJobDao.getScheduleJobById(id);
 	}
 
 	public boolean addScheduleJob(ScheduleJob job) {
@@ -52,13 +50,13 @@ public class ScheduleJobService {
 		return isSuccessful;
 	}
 
-	public boolean updateScheduleJob(ScheduleJob job) {
+	public boolean updateScheduleJob(Long id, ScheduleJob job) {
 		if (job == null) {
 			return false;
 		}
 		boolean successful = false;
 		// get job details by id
-		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(job.getJobId());
+		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);
 		// populate job updated details
 		scheduleJob.setAppUrl(job.getAppUrl());
 		scheduleJob.setSuccessfulCode(job.getSuccessfulCode());
@@ -97,7 +95,7 @@ public class ScheduleJobService {
 		return successful;
 	}
 
-	public boolean deleteStatus(Long id) {
+	public boolean deleteJob(Long id) {
 		boolean successful = false;
 		// get job details by id
 		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);

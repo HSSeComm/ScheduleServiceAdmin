@@ -39,8 +39,7 @@ public class JobManagementController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody ScheduleJob getScheduleJob(@PathVariable Long id) {
-		ScheduleJob ScheduleJobs = null;
-
+		ScheduleJob ScheduleJobs = scheduleJobService.getScheduleJob(id);
 		return ScheduleJobs;
 	}
 
@@ -63,8 +62,8 @@ public class JobManagementController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public String deleteScheduleJobs(@PathVariable Long id) {
-
-		return "success";
+		boolean deleteStatus = scheduleJobService.deleteJob(id);
+		return deleteStatus ? "success" : "failed";
 	}
 
 	/**
@@ -76,8 +75,8 @@ public class JobManagementController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
 	public String changeScheduleJobStatus(@PathVariable Long id, @RequestBody ScheduleJob scheduleJob) {
-
-		return "success";
+		boolean changeStatus = scheduleJobService.changeStatus(id, scheduleJob.getStatus());
+		return changeStatus ? "success" : "failed";
 	}
 
 	/**
@@ -89,7 +88,7 @@ public class JobManagementController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String updateScheduleJobDetails(@PathVariable long id, @RequestBody ScheduleJob scheduleJob) {
-
-		return "success";
+		boolean changeStatus = scheduleJobService.updateScheduleJob(id, scheduleJob);
+		return changeStatus ? "success" : "failed";
 	}
 }
