@@ -6,6 +6,7 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.schedule.demo.dao.ScheduleJobDao;
 import com.schedule.demo.jobs.SimpleJob;
 import com.schedule.demo.vo.ScheduleJob;
 
@@ -14,10 +15,11 @@ public class ScheduleJobService {
 
 	@Autowired
 	private QuartzManager quartzManager;
+	@Autowired
+	private ScheduleJobDao scheduleJobDao;
 
 	public List<ScheduleJob> getJobs() {
-
-		return null;
+		return scheduleJobDao.queryScheduleJobs();
 	}
 
 	public ScheduleJob getScheduleJob(Long id) {
@@ -35,10 +37,11 @@ public class ScheduleJobService {
 		// job.setJobId(current);
 		job.setTriggerName("testTriggerName-" + current);
 		job.setTriggerGroupName("testTriggerGroupName");
-		job.setJobGroupName("testJobGroupName-" + current);
+		job.setJobGroupName("G-" + job.getJobName());
 		boolean isSuccessful = false;
 		// save job information to db
-
+		Long jobId = scheduleJobDao.insert(job);
+		job.setJobId(jobId);
 		// submit to ScheduleService
 		try {
 			quartzManager.addJob(job);
