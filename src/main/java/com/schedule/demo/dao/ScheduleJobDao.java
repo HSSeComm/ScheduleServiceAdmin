@@ -37,7 +37,7 @@ public class ScheduleJobDao {
 			long id= this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
 			scheduleJob.setJobId(id);
 		}
-		return 0;
+		return flag;
 
 	}
 
