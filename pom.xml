@@ -8,14 +8,14 @@
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ScheduleServiceAdmin</name> 
+	<name>ScheduleServiceAdmin</name>
 	<description>Demo project for Schedule Service Admin</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -56,7 +56,11 @@
 			<version>2.2.1</version>
 		</dependency>
 
-
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-compress</artifactId>
+    		<version>1.14</version>
+		</dependency>
 	</dependencies>
 
 	<build>
