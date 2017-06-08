@@ -29,10 +29,10 @@ public class QuartzManager {
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("appUrl", job.getAppUrl());
 		jobDataMap.put("successfulCode", job.getSuccessfulCode());
-		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass()).withIdentity(job.getJobId(), job.getJobGroupName())
+		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass()).withIdentity(job.getJobName(), job.getJobGroupName())
 				.usingJobData(jobDataMap).build();
 		CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getTriggerName(), job.getTriggerGroupName())
-				.withSchedule(cronSchedule(job.getCornExpr())).forJob(job.getJobId(), job.getJobGroupName()).build();
+				.withSchedule(cronSchedule(job.getCornExpr())).forJob(job.getJobName(), job.getJobGroupName()).build();
 		sched.scheduleJob(jobDetail, trigger);
 		sched.start();
 		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
@@ -59,7 +59,7 @@ public class QuartzManager {
 	public ScheduleJob pauseJob(ScheduleJob job) throws SchedulerException {
 		Scheduler scheduler = gSchedulerFactory.getScheduler();
 		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
-		JobKey jobKey = JobKey.jobKey(job.getJobId(), job.getJobGroupName());
+		JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroupName());
 		scheduler.pauseJob(jobKey);
 		TriggerState triggerState = scheduler.getTriggerState(triggerKey);
 		job.setStatus(triggerState.name());
@@ -69,7 +69,7 @@ public class QuartzManager {
 	public ScheduleJob resumeJob(ScheduleJob job) throws SchedulerException {
 		Scheduler scheduler = gSchedulerFactory.getScheduler();
 		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
-		JobKey jobKey = JobKey.jobKey(job.getJobId(), job.getJobGroupName());
+		JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroupName());
 		scheduler.resumeJob(jobKey);
 		TriggerState triggerState = scheduler.getTriggerState(triggerKey);
 		job.setStatus(triggerState.name());
@@ -78,7 +78,7 @@ public class QuartzManager {
 
 	public void deleteJob(ScheduleJob job) throws SchedulerException {
 		Scheduler scheduler = gSchedulerFactory.getScheduler();
-		JobKey jobKey = JobKey.jobKey(job.getJobId(), job.getJobGroupName());
+		JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroupName());
 		scheduler.deleteJob(jobKey);
 	}
 }
