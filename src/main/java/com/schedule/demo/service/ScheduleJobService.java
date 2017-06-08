@@ -36,6 +36,7 @@ public class ScheduleJobService {
 		job.setTriggerName("testTriggerName-" + current);
 		job.setTriggerGroupName("testTriggerGroupName");
 		job.setJobGroupName("G-" + job.getJobName());
+		job.setStatus("NORMAL");
 		boolean isSuccessful = false;
 		// save job information to db
 		Long jobId = scheduleJobDao.insert(job);
