@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.schedule.demo.service.ScheduleJobService;
 import com.schedule.demo.vo.ScheduleJob;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-
 @RestController
 @RequestMapping("/ScheduleJobs")
 public class JobManagementController {
@@ -23,15 +19,23 @@ public class JobManagementController {
 	@Autowired
 	private ScheduleJobService scheduleJobService;
 
-	@ApiOperation(value = "Get All Jobs list", notes = "")
+	/**
+	 * Get All jobs
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<ScheduleJob> getJobs() {
 
 		return null;
 	}
 
-	@ApiOperation(value = "Get job detail information", notes = "Get ScheduleJobs detail information by ScheduleJobs id")
-	@ApiImplicitParam(name = "id", value = "ScheduleJobs id", required = true, dataType = "Long")
+	/**
+	 * Get a single job details
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ScheduleJob getScheduleJobs(@PathVariable Long id) {
 		ScheduleJob ScheduleJobs = null;
@@ -39,29 +43,51 @@ public class JobManagementController {
 		return ScheduleJobs;
 	}
 
-	@ApiOperation(value = "Create ScheduleJobs", notes = "Create ScheduleJobs by ScheduleJobs object")
-	@ApiImplicitParam(name = "ScheduleJobs", value = "ScheduleJobs entity", required = true, dataType = "ScheduleJobs")
+	/**
+	 * 
+	 * @param scheduleJobs
+	 * @return
+	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String postScheduleJobs(@RequestBody ScheduleJob scheduleJobs) {
-		boolean saveStatus = scheduleJobService.addScheduleJob(scheduleJobs);
+	public String createScheduleJob(@RequestBody ScheduleJob scheduleJob) {
+		boolean saveStatus = scheduleJobService.addScheduleJob(scheduleJob);
 		return saveStatus ? "success" : "failed";
 	}
 
-	@ApiOperation(value = "Update ScheduleJobs", notes = "Update ScheduleJobs by id")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "ScheduleJobs id", required = true, dataType = "long"),
-			@ApiImplicitParam(name = "ScheduleJobs", value = "ScheduleJobs entity", required = true, dataType = "ScheduleJobs")
-
-	})
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public String updateScheduleJobs(@PathVariable long id, @RequestBody ScheduleJob ScheduleJobs) {
+	/**
+	 * Remove a job
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public String deleteScheduleJobs(@PathVariable Long id) {
 
 		return "success";
 	}
 
-	@ApiOperation(value = "Delete ScheduleJobs", notes = "Delete ScheduleJobs by ScheduleJobs id")
-	@ApiImplicitParam(name = "id", value = "ScheduleJobs id", required = true, dataType = "Long")
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public String deleteScheduleJobs(@PathVariable Long id) {
+	/**
+	 * Active/Suspend job
+	 * 
+	 * @param id
+	 * @param ScheduleJob
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+	public String changeScheduleJobStatus(@PathVariable Long id, @RequestBody ScheduleJob ScheduleJob) {
+
+		return "success";
+	}
+
+	/**
+	 * Update job information
+	 * 
+	 * @param id
+	 * @param ScheduleJob
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public String updateScheduleJobDetails(@PathVariable long id, @RequestBody ScheduleJob ScheduleJob) {
 
 		return "success";
 	}

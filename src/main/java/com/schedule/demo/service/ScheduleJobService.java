@@ -34,4 +34,23 @@ public class ScheduleJobService {
 		return successful;
 	}
 
+	public boolean updateScheduleJob(ScheduleJob job) {
+		if (job == null) {
+			return false;
+		}
+		job.setJobClass(SimpleJob.class);
+
+		boolean successful = false;
+		// update job information to db
+
+		// update to ScheduleService
+		try {
+			quartzManager.addJob(job);
+			successful = true;
+		} catch (SchedulerException e) {
+			successful = false;
+		}
+		return successful;
+	}
+
 }
