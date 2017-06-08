@@ -39,43 +39,42 @@ $('#scheduleJobsListTable').DataTable({
 });
 
 function refreshData() {
-	$
-			.ajax({
-				url : "/ScheduleJobs",
-				type : "GET",
-				async : true,
-				success : function(data) {
-					var tableData = new Array();
-					for (var i = 0; i < data.length; i++) {
-						var array = new Array();
-						array.push(data[i].jobId);
-						array.push(data[i].jobName);
-						array.push(data[i].cornExpr);
-						array.push(data[i].status);
-						var actionHtml = '<input type="button" onclick="alert('
-								+ data[i].jobId + ')" value="Edit"/>';
-						actionHtml = actionHtml
-								+ '<input type="button" onclick="deleteJob('
-								+ data[i].jobId + ')" value="Delete"/>';
-						if (data[i].status == "NORMAL") {
-							actionHtml = actionHtml
-									+ '<input type="button" onclick="changeStatus('
-									+ data[i].jobId
-									+ ',\'suspend\')" value="Suspend"/>';
-						} else {
-							actionHtml = actionHtml
-									+ '<input type="button" onclick="changeStatus('
-									+ data[i].jobId
-									+ ',\'active\')" value="Active"/>';
-						}
-						array.push(actionHtml);
-						tableData.push(array);
-					}
-					$('#scheduleJobsListTable').dataTable().fnClearTable();
-					$('#scheduleJobsListTable').dataTable().fnAddData(
-							tableData, true);
+	$.ajax({
+		url : "/ScheduleJobs",
+		type : "GET",
+		async : true,
+		success : function(data) {
+			var tableData = new Array();
+			$('#scheduleJobsListTable').dataTable().fnClearTable();
+			for (var i = 0; i < data.length; i++) {
+				var array = new Array();
+				array.push(data[i].jobId);
+				array.push(data[i].jobName);
+				array.push(data[i].cornExpr);
+				array.push(data[i].status);
+				var actionHtml = "<input type=\"button\" onclick=\"alert("
+						+ data[i].jobId + ")\" value=\"Edit\"/>";
+				actionHtml = actionHtml
+						+ "<input type=\"button\" onclick=\"deleteJob("
+						+ data[i].jobId + ")\" value=\"Delete\"/>";
+				if (data[i].status == "NORMAL") {
+					actionHtml = actionHtml
+							+ "<input type=\"button\" onclick=\"changeStatus("
+							+ data[i].jobId + ",0)\" value=\"Suspend\"/>";
+				} else {
+					actionHtml = actionHtml
+							+ "<input type=\"button\" onclick=\"changeStatus("
+							+ data[i].jobId + ",1)\" value=\"Active\"/>";
 				}
-			});
+				array.push(actionHtml);
+				tableData.push(array);
+			}
+			if (tableData.length > 0) {
+				$('#scheduleJobsListTable').dataTable().fnAddData(tableData,
+						true);
+			}
+		}
+	});
 }
 
 refreshData();
@@ -101,7 +100,7 @@ function deleteJob(id) {
 
 function changeStatus(id, targetStatus) {
 	var postData = {
-		status : (targetStatus == "suspend") ? "PAUSE" : "NORMAL"
+		status : (targetStatus == 0) ? "PAUSE" : "NORMAL"
 	}
 	$.ajax({
 		url : "/ScheduleJobs/" + id,
@@ -113,7 +112,8 @@ function changeStatus(id, targetStatus) {
 			if (resp == "success") {
 				refreshData();
 			} else {
-				alert("Job " + targetStatus + " failed");
+				alert("Job " + (targetStatus == 0) ? "suspend" : "active"
+						+ " failed");
 			}
 		}
 	})
