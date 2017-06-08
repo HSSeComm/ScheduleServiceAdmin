@@ -18,6 +18,28 @@ public class ScheduleJobService {
 	@Autowired
 	private ScheduleJobDao scheduleJobDao;
 
+	public void rebuildJobs() {
+		List<ScheduleJob> scheduleJobs = scheduleJobDao.queryScheduleJobs();
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		for (ScheduleJob job : scheduleJobs) {
+			if ("NORMAL".equals(job.getStatus())) {
+				// submit to ScheduleService
+				try {
+					quartzManager.addJob(job);
+					++i;
+				} catch (SchedulerException e) {
+					++j;
+				}
+			} else {
+				++k;
+			}
+
+		}
+		System.out.println("Rebuild schedule successful:" + i + ",failed:" + j + ",skipped:" + k);
+	}
+
 	public List<ScheduleJob> getJobs() {
 		return scheduleJobDao.queryScheduleJobs();
 	}
@@ -81,7 +103,7 @@ public class ScheduleJobService {
 		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);
 		// update latest in db
 		scheduleJob.setStatus(status);
-		scheduleJobDao.update(scheduleJob);
+		scheduleJobDao.updateStatus(scheduleJob);
 		// update to ScheduleService
 		try {
 			if ("NORMAL".equals(status)) {
