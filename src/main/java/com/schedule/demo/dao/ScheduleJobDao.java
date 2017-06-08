@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.schedule.demo.vo.ScheduleJob;
 
+@Repository
 public class ScheduleJobDao {
 	private JdbcTemplate jdbcTemplate;
 
@@ -34,7 +36,7 @@ public class ScheduleJobDao {
 				scheduleJob.getTriggerGroupName(), scheduleJob.getStatus(), scheduleJob.getAppUrl(),
 				scheduleJob.getHttpMehtod(), scheduleJob.getSuccessfulCode());
 		if (flag > 0) {
-			long id= this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
+			long id = this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
 			scheduleJob.setJobId(id);
 		}
 		return 0;
@@ -68,6 +70,7 @@ public class ScheduleJobDao {
 	public List<ScheduleJob> queryScheduleJobs() {
 		return getJdbcTemplate().query("select * from schedule_job", new RowMapper<ScheduleJob>() {
 
+			@Override
 			public ScheduleJob mapRow(ResultSet rs, int arg1) throws SQLException {
 				ScheduleJob scheduleJob = new ScheduleJob();
 				scheduleJob.setJobId(rs.getLong("job_id"));

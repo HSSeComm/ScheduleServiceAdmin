@@ -37,7 +37,7 @@ public class JobManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ScheduleJob getScheduleJobs(@PathVariable Long id) {
+	public ScheduleJob getScheduleJob(@PathVariable Long id) {
 		ScheduleJob ScheduleJobs = null;
 
 		return ScheduleJobs;
@@ -74,7 +74,7 @@ public class JobManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public String changeScheduleJobStatus(@PathVariable Long id, @RequestBody ScheduleJob ScheduleJob) {
+	public String changeScheduleJobStatus(@PathVariable Long id, @RequestBody ScheduleJob scheduleJob) {
 
 		return "success";
 	}
@@ -87,7 +87,7 @@ public class JobManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public String updateScheduleJobDetails(@PathVariable long id, @RequestBody ScheduleJob ScheduleJob) {
+	public String updateScheduleJobDetails(@PathVariable long id, @RequestBody ScheduleJob scheduleJob) {
 
 		return "success";
 	}
