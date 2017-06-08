@@ -19,6 +19,7 @@ public class ScheduleJobService {
 		}
 		job.setJobClass(SimpleJob.class);
 		long current = System.currentTimeMillis();
+		job.setJobId("testTriggerName-" + current);
 		job.setTriggerName("testTriggerName-" + current);
 		job.setTriggerGroupName("testTriggerGroupName");
 		job.setJobGroupName("testJobGroupName-" + current);

@@ -1,15 +1,20 @@
 package com.schedule.demo.jobs;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,28 +29,37 @@ public class SimpleJob implements org.quartz.Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		String appUrl = jobDataMap.getString("appUrl");
+		boolean appCallStatus = false;
+		String resCode = "";
+		String successfulCode = jobDataMap.getString("successfulCode");
 		try {
-			submitGetRequest(jobDataMap.getString(""), appUrl);
+			resCode = submitGetRequest(successfulCode, appUrl);
+			if (successfulCode != null && successfulCode.equals(resCode)) {
+				appCallStatus = true;
+			} else {
+				appCallStatus = false;
+			}
 		} catch (Exception e) {
+			appCallStatus = false;
 			e.printStackTrace();
-			throw new RuntimeException(e);
+		} finally {
+			// all db to update job running status
+			System.out.println("Job running:" + appCallStatus);
+
 		}
 
 	}
 
-	private boolean submitGetRequest(String expectedResponse, String appUrl) throws Exception {
+	private String submitGetRequest(String expectedResponse, String appUrl) throws Exception {
+		String resBody = "";
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		System.out.println("Calling:" + appUrl);
 		HttpGet httpGet = new HttpGet(appUrl);
 		CloseableHttpResponse response1 = httpclient.execute(httpGet);
 		try {
-			System.out.println(response1.getStatusLine());
-			HttpEntity entity1 = response1.getEntity();
-			// do something useful with the response body
-			// and ensure it is fully consumed
-			EntityUtils.consume(entity1);
+			System.out.println("Calling:" + appUrl + "," + response1.getStatusLine());
+			resBody = getResponseBodyAsString(response1);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} finally {
 			try {
@@ -55,7 +69,7 @@ public class SimpleJob implements org.quartz.Job {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		return resBody;
 	}
 
 	private boolean submitPostRequest(String expectedResponse, String appUrl) throws Exception {
@@ -78,5 +92,21 @@ public class SimpleJob implements org.quartz.Job {
 			response2.close();
 		}
 		return true;
+	}
+
+	public static String getResponseBodyAsString(HttpResponse response) throws Exception {
+		StringBuilder sb = new StringBuilder();
+		HttpEntity httpEntity = response.getEntity();
+		if (httpEntity != null) {
+			httpEntity = new BufferedHttpEntity(httpEntity);
+			InputStream is = httpEntity.getContent();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			String str;
+			while ((str = br.readLine()) != null) {
+				sb.append(str);
+			}
+			is.close();
+		}
+		return sb.toString();
 	}
 }
