@@ -110,6 +110,19 @@ function refreshData() {
 					pieChart.Doughnut(PieData, pieOptions);
 				}
 			});
+	$
+	.ajax({
+		url : "/ScheduleLogs",
+		type : "GET",
+		async : true,
+		success : function(data) {
+			var failCount = 0;
+			for (var i = 0; i < data.length; i++) {
+				failCount = failCount + data[i].failCount;
+			}
+			$("#failureCount").text(failCount);
+		}
+	});
 }
 
 refreshData();
@@ -234,20 +247,20 @@ var areaChartData = {
 	      labels: ["January", "February", "March", "April", "May", "June", "July"],
 	      datasets: [
 	        {
-	          label: "Electronics",
-	          fillColor: "rgba(210, 214, 222, 1)",
-	          strokeColor: "rgba(210, 214, 222, 1)",
-	          pointColor: "rgba(210, 214, 222, 1)",
+	          label: "Success Calls",
+	          fillColor: "#00a65a",
+	          strokeColor: "#00a65a",
+	          pointColor: "#00a65a",
 	          pointStrokeColor: "#c1c7d1",
 	          pointHighlightFill: "#fff",
 	          pointHighlightStroke: "rgba(220,220,220,1)",
 	          data: [65, 59, 80, 81, 56, 55, 40]
 	        },
 	        {
-	          label: "Digital Goods",
-	          fillColor: "rgba(60,141,188,0.9)",
-	          strokeColor: "rgba(60,141,188,0.8)",
-	          pointColor: "#3b8bba",
+	          label: "Failure Calls",
+	          fillColor: "#f56954",
+	          strokeColor: "#f56954",
+	          pointColor: "#f56954",
 	          pointStrokeColor: "rgba(60,141,188,1)",
 	          pointHighlightFill: "#fff",
 	          pointHighlightStroke: "rgba(60,141,188,1)",
@@ -258,9 +271,6 @@ var areaChartData = {
 var barChartCanvas = $("#barChart").get(0).getContext("2d");
 var barChart = new Chart(barChartCanvas);
 var barChartData = areaChartData;
-barChartData.datasets[1].fillColor = "#00a65a";
-barChartData.datasets[1].strokeColor = "#00a65a";
-barChartData.datasets[1].pointColor = "#00a65a";
 var barChartOptions = {
   // Boolean - Whether the scale should start at zero, or an order of
 	// magnitude down from the lowest value
