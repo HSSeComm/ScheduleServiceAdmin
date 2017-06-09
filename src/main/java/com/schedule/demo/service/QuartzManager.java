@@ -65,23 +65,11 @@ public class QuartzManager {
 	}
 
 	public ScheduleJob pauseJob(ScheduleJob job) throws SchedulerException {
-//		Scheduler scheduler = gSchedulerFactory.getScheduler();
-//		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
-//		JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroupName());
-//		scheduler.pauseJob(jobKey);
-//		TriggerState triggerState = scheduler.getTriggerState(triggerKey);
-//		job.setStatus(triggerState.name());
 		deleteJob(job);
 		return job;
 	}
 
 	public ScheduleJob resumeJob(ScheduleJob job) throws SchedulerException {
-//		Scheduler scheduler = gSchedulerFactory.getScheduler();
-//		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
-//		JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroupName());
-//		scheduler.resumeJob(jobKey);
-//		TriggerState triggerState = scheduler.getTriggerState(triggerKey);
-//		job.setStatus(triggerState.name());
 		addJob(job);
 		return job;
 	}
