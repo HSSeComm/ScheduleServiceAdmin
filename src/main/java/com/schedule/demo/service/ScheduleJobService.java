@@ -80,6 +80,7 @@ public class ScheduleJobService {
 		boolean successful = false;
 		// get job details by id
 		ScheduleJob scheduleJob = scheduleJobDao.getScheduleJobById(id);
+		String exsistingName = scheduleJob.getJobName();
 		// populate job updated details
 		scheduleJob.setAppUrl(job.getAppUrl());
 		scheduleJob.setSuccessfulCode(job.getSuccessfulCode());
@@ -89,10 +90,8 @@ public class ScheduleJobService {
 		scheduleJobDao.update(scheduleJob);
 		// update to ScheduleService
 		try {
-			quartzManager.updateJobCron(scheduleJob);
+			quartzManager.updateJobDetail(scheduleJob,exsistingName);
 			successful = true;
-		} catch (SchedulerException e) {
-			successful = false;
 		} catch (Exception e){
 			successful = false;
 		}
