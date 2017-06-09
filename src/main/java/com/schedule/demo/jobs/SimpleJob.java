@@ -49,15 +49,17 @@ public class SimpleJob implements org.quartz.Job {
 			appCallStatus = false;
 			e.printStackTrace();
 		} finally {
-			//add schedule log
-			try{
-				ScheduleLog scheduleLog=new ScheduleLog();
-				
-				scheduleLog.setJobId(jobId);
-				scheduleLog.setCallStatus(appCallStatus);
-				scheduleLogDao.insert(scheduleLog);
-			}catch(Exception e){
-				e.printStackTrace();
+			if(!appCallStatus){
+				//add schedule log
+				try{
+					ScheduleLog scheduleLog=new ScheduleLog();
+					
+					scheduleLog.setJobId(jobId);
+					scheduleLog.setCallStatus(appCallStatus);
+					scheduleLogDao.insert(scheduleLog);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 			// all db to update job running status
 			System.out.println("Job running:" + appCallStatus);
