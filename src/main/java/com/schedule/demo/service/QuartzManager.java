@@ -41,21 +41,6 @@ public class QuartzManager {
 		job.setStatus(triggerState.name());
 		return job;
 	}
-
-	public void updateJobCron(ScheduleJob job) throws SchedulerException {
-		Scheduler scheduler = gSchedulerFactory.getScheduler();
-
-		TriggerKey triggerKey = TriggerKey.triggerKey(job.getTriggerName(), job.getTriggerGroupName());
-
-		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-
-		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCornExpr());
-
-		trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-
-		scheduler.rescheduleJob(triggerKey, trigger);
-
-	}
 	
 	public void updateJobDetail(ScheduleJob job,String exsistingName) throws SchedulerException{
 		if("NORMAL".equals(job.getStatus())){

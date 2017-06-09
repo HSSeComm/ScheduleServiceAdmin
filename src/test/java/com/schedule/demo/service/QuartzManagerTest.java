@@ -25,7 +25,7 @@ public class QuartzManagerTest {
 		Thread.sleep(10000);
 		
 		job.setCornExpr("*/1 * * * * ?");
-		quartzManager.updateJobCron(job);
+		quartzManager.updateJobDetail(job, job.getJobName());
 		System.out.println(job.getStatus());
 		
 		Thread.sleep(5000);
