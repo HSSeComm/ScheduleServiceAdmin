@@ -6,19 +6,19 @@ public class ScheduleLog {
 	private Long logId;
 	private Long jobId;
 	private String jobName;
-	private String reason;
-	private Date insertDate;
+	private String appUrl;
+	private String httpMehtod;
+	private String successfulCode;
+	private String insertDate;
 	
 	public ScheduleLog(){
 		
 	}
 
-	public ScheduleLog(Long logId, Long jobId, String jobName, String reason) {
+	public ScheduleLog(Long logId, Long jobId) {
 		super();
 		this.logId = logId;
 		this.jobId = jobId;
-		this.jobName = jobName;
-		this.reason = reason;
 	}
 
 	public Long getLogId() {
@@ -45,19 +45,35 @@ public class ScheduleLog {
 		this.jobName = jobName;
 	}
 
-	public String getReason() {
-		return reason;
+	public String getAppUrl() {
+		return appUrl;
 	}
 
-	public void setReason(String reason) {
-		this.reason = reason;
+	public void setAppUrl(String appUrl) {
+		this.appUrl = appUrl;
 	}
 
-	public Date getInsertDate() {
+	public String getHttpMehtod() {
+		return httpMehtod;
+	}
+
+	public void setHttpMehtod(String httpMehtod) {
+		this.httpMehtod = httpMehtod;
+	}
+
+	public String getSuccessfulCode() {
+		return successfulCode;
+	}
+
+	public void setSuccessfulCode(String successfulCode) {
+		this.successfulCode = successfulCode;
+	}
+
+	public String getInsertDate() {
 		return insertDate;
 	}
 
-	public void setInsertDate(Date insertDate) {
+	public void setInsertDate(String insertDate) {
 		this.insertDate = insertDate;
 	}
 	
