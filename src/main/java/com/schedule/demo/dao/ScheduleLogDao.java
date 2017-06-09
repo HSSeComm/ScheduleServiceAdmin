@@ -40,6 +40,21 @@ public class ScheduleLogDao {
 		return flag;
 
 	}
+	
+	public List<ScheduleLog> countFail() {
+		return getJdbcTemplate().query("select t.job_id,s.job_name,count(t.job_id) fail_count from schedule_log t inner join schedule_job s on t.job_id = s.job_id where t.call_status=0 group by t.job_id,s.job_name", new RowMapper<ScheduleLog>() {
+
+			@Override
+			public ScheduleLog mapRow(ResultSet rs, int arg1) throws SQLException {
+				ScheduleLog scheduleLog = new ScheduleLog();
+				scheduleLog.setJobId(rs.getLong("job_id"));
+				scheduleLog.setJobName(rs.getString("job_name"));
+				scheduleLog.setFailCount(rs.getInt("fail_count"));
+				return scheduleLog;
+			}
+
+		});
+	}
 
 	public List<ScheduleLog> queryScheduleLogs() {
 		return getJdbcTemplate().query("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.call_status from schedule_log t  inner join schedule_job s on t.job_id = s.job_id", new RowMapper<ScheduleLog>() {

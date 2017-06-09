@@ -10,6 +10,7 @@ public class ScheduleLog {
 	private String httpMehtod;
 	private Boolean callStatus;
 	private String insertDate;
+	private Integer failCount;
 	
 	public ScheduleLog(){
 		
@@ -75,6 +76,14 @@ public class ScheduleLog {
 
 	public void setInsertDate(String insertDate) {
 		this.insertDate = insertDate;
+	}
+
+	public Integer getFailCount() {
+		return failCount;
+	}
+
+	public void setFailCount(Integer failCount) {
+		this.failCount = failCount;
 	}
 	
 	
