@@ -4,12 +4,23 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.schedule.demo.dao.ScheduleJobDao;
 import com.schedule.demo.vo.ScheduleJob;
 
-public class ScheduleJobDaoTest extends BaseJunit4Test {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@WebAppConfiguration
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+public class ScheduleJobDaoTest {
 	@Resource
 	private ScheduleJobDao scheduleJobDao;
 
@@ -19,7 +30,7 @@ public class ScheduleJobDaoTest extends BaseJunit4Test {
 		scheduleJob.setJobName("test1");
 		scheduleJob.setCornExpr("test2");
 		Long id = scheduleJobDao.insert(scheduleJob);
-		System.out.println(id);
+		Assert.assertTrue(id>0);
 	}
 
 	@Test
