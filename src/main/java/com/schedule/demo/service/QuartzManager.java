@@ -28,6 +28,7 @@ public class QuartzManager {
 		Scheduler sched = gSchedulerFactory.getScheduler();
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("appUrl", job.getAppUrl());
+		jobDataMap.put("jobId", job.getJobId());
 		jobDataMap.put("successfulCode", job.getSuccessfulCode());
 		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass()).withIdentity(job.getJobName(), job.getJobGroupName())
 				.usingJobData(jobDataMap).build();

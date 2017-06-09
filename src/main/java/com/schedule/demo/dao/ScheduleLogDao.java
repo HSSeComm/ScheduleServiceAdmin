@@ -30,8 +30,8 @@ public class ScheduleLogDao {
 
 	public long insert(ScheduleLog scheduleLog) {
 
-		int flag = getJdbcTemplate().update("INSERT INTO schedule_log(job_id,successful_code) VALUES (?,?)",
-				scheduleLog.getJobId(), scheduleLog.getSuccessfulCode());
+		int flag = getJdbcTemplate().update("INSERT INTO schedule_log(job_id,call_status) VALUES (?,?)",
+				scheduleLog.getJobId(), scheduleLog.getCallStatus());
 		if (flag > 0) {
 			long id = this.getJdbcTemplate().queryForObject("select last_insert_id()", Long.class);
 			scheduleLog.setLogId(id);
@@ -42,7 +42,7 @@ public class ScheduleLogDao {
 	}
 
 	public List<ScheduleLog> queryScheduleLogs() {
-		return getJdbcTemplate().query("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.successful_code from schedule_log t  inner join schedule_job s on t.job_id = s.job_id", new RowMapper<ScheduleLog>() {
+		return getJdbcTemplate().query("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.call_status from schedule_log t  inner join schedule_job s on t.job_id = s.job_id", new RowMapper<ScheduleLog>() {
 
 			@Override
 			public ScheduleLog mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -52,7 +52,7 @@ public class ScheduleLogDao {
 				scheduleLog.setInsertDate(rs.getDate("insert_date")==null?"":simple.format(rs.getDate("insert_date")));
 				scheduleLog.setAppUrl(rs.getString("app_url"));
 				scheduleLog.setJobName(rs.getString("job_name"));
-				scheduleLog.setSuccessfulCode(rs.getString("successful_code"));
+				scheduleLog.setCallStatus(rs.getBoolean("call_status"));
 				return scheduleLog;
 			}
 
@@ -60,7 +60,7 @@ public class ScheduleLogDao {
 	}
 
 	public List<ScheduleLog> queryScheduleLogsByJobId(Long jogId) {
-		return getJdbcTemplate().query("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.successful_code from schedule_log t  inner join schedule_job s on t.job_id = s.job_id where t.job_id=?", new Object[] { jogId }, new RowMapper<ScheduleLog>() {
+		return getJdbcTemplate().query("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.call_status from schedule_log t  inner join schedule_job s on t.job_id = s.job_id where t.job_id=?", new Object[] { jogId }, new RowMapper<ScheduleLog>() {
 
 			@Override
 			public ScheduleLog mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -69,7 +69,7 @@ public class ScheduleLogDao {
 				scheduleLog.setJobId(rs.getLong("job_id"));
 				scheduleLog.setAppUrl(rs.getString("app_url"));
 				scheduleLog.setJobName(rs.getString("job_name"));
-				scheduleLog.setSuccessfulCode(rs.getString("successful_code"));
+				scheduleLog.setCallStatus(rs.getBoolean("call_status"));
 				scheduleLog.setInsertDate(rs.getDate("insert_date")==null?"":simple.format(rs.getDate("insert_date")));
 				return scheduleLog;
 			}
@@ -78,7 +78,7 @@ public class ScheduleLogDao {
 	}
 	
 	public ScheduleLog getScheduleLogById(Long logId) {
-		return getJdbcTemplate().queryForObject("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.successful_code from schedule_log t  inner join schedule_job s on t.job_id = s.job_id  where t.log_id=?", new Object[] { logId },
+		return getJdbcTemplate().queryForObject("select t.log_id,t.job_id,t.insert_date,s.job_name,s.app_url,t.call_status from schedule_log t  inner join schedule_job s on t.job_id = s.job_id  where t.log_id=?", new Object[] { logId },
 				new RowMapper<ScheduleLog>() {
 
 					@Override
@@ -88,7 +88,7 @@ public class ScheduleLogDao {
 						scheduleLog.setJobId(rs.getLong("job_id"));
 						scheduleLog.setAppUrl(rs.getString("app_url"));
 						scheduleLog.setJobName(rs.getString("job_name"));
-						scheduleLog.setSuccessfulCode(rs.getString("successful_code"));
+						scheduleLog.setCallStatus(rs.getBoolean("call_status"));
 						scheduleLog.setInsertDate(rs.getDate("insert_date")==null?"":simple.format(rs.getDate("insert_date")));
 						return scheduleLog;
 					}

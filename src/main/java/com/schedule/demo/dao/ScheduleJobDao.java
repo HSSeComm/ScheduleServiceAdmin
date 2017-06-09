@@ -70,6 +70,13 @@ public class ScheduleJobDao {
 				scheduleJob.getJobId());
 
 	}
+	
+	public int updateStatus(Long jobId,String status) {
+
+		return getJdbcTemplate().update("update schedule_job set status=? where job_id=?", status,
+				jobId);
+
+	}
 
 	public int delete(Long jobId) {
 

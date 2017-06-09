@@ -8,7 +8,7 @@ public class ScheduleLog {
 	private String jobName;
 	private String appUrl;
 	private String httpMehtod;
-	private String successfulCode;
+	private Boolean callStatus;
 	private String insertDate;
 	
 	public ScheduleLog(){
@@ -61,12 +61,12 @@ public class ScheduleLog {
 		this.httpMehtod = httpMehtod;
 	}
 
-	public String getSuccessfulCode() {
-		return successfulCode;
+	public Boolean getCallStatus() {
+		return callStatus;
 	}
 
-	public void setSuccessfulCode(String successfulCode) {
-		this.successfulCode = successfulCode;
+	public void setCallStatus(Boolean callStatus) {
+		this.callStatus = callStatus;
 	}
 
 	public String getInsertDate() {
