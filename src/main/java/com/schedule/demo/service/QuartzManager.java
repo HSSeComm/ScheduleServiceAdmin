@@ -15,13 +15,18 @@ import org.quartz.Trigger.TriggerState;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.schedule.demo.dao.ScheduleLogDao;
 import com.schedule.demo.vo.ScheduleJob;
 
 @Component
 public class QuartzManager {
 
+	@Autowired
+	private ScheduleLogDao scheduleLogDao;
+	
 	private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
 
 	public ScheduleJob addJob(ScheduleJob job) throws SchedulerException {
@@ -30,6 +35,7 @@ public class QuartzManager {
 		jobDataMap.put("appUrl", job.getAppUrl());
 		jobDataMap.put("jobId", job.getJobId());
 		jobDataMap.put("successfulCode", job.getSuccessfulCode());
+		jobDataMap.put("scheduleLogDao", scheduleLogDao);
 		JobDetail jobDetail = JobBuilder.newJob(job.getJobClass()).withIdentity(job.getJobName(), job.getJobGroupName())
 				.usingJobData(jobDataMap).build();
 		CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getTriggerName(), job.getTriggerGroupName())

@@ -29,9 +29,6 @@ import com.schedule.demo.dao.ScheduleLogDao;
 import com.schedule.demo.vo.ScheduleLog;
 
 public class SimpleJob implements org.quartz.Job {
-
-	@Autowired
-	private ScheduleLogDao scheduleLogDao;
 	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -41,6 +38,7 @@ public class SimpleJob implements org.quartz.Job {
 		boolean appCallStatus = false;
 		String resCode = "";
 		String successfulCode = jobDataMap.getString("successfulCode");
+		ScheduleLogDao scheduleLogDao = (ScheduleLogDao) jobDataMap.get("scheduleLogDao");
 		try {
 			resCode = submitGetRequest(successfulCode, appUrl);
 			if (successfulCode != null && successfulCode.equals(resCode)) {
