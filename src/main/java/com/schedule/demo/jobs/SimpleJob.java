@@ -23,7 +23,6 @@ import org.apache.http.util.EntityUtils;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.schedule.demo.dao.ScheduleLogDao;
 import com.schedule.demo.vo.ScheduleLog;
