@@ -86,6 +86,7 @@ public class ScheduleJobService {
 		scheduleJob.setSuccessfulCode(job.getSuccessfulCode());
 		scheduleJob.setJobName(job.getJobName());
 		scheduleJob.setHttpMehtod(job.getHttpMehtod());
+		scheduleJob.setCornExpr(job.getCornExpr());
 		// update latest in db
 		scheduleJobDao.update(scheduleJob);
 		// update to ScheduleService
